@@ -663,7 +663,9 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         return modifiedPath;
     }
 
-
+       public static boolean isMediaDocument(Uri uri) {    
+	    return "com.android.providers.media.documents".equals(uri.getAuthority());    
+	}
     /**
      * Applies all needed transformation to the image received from the gallery.
      *
@@ -701,7 +703,15 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                     (destType == FILE_URI || destType == NATIVE_URI) && !this.correctOrientation &&
                     mimeType.equalsIgnoreCase(getMimetypeForFormat(encodingType)))
             {
-                this.callbackContext.success(uriString);
+                   //---------------------------------------------------------------------------------
+            	 if(isMediaDocument(uri)){  
+                    String realPath = FileHelper.getRealPath(uri, this.cordova);
+                    this.callbackContext.success("file://" + realPath);  
+                }else{  
+                     this.callbackContext.success(uriString);  
+                }
+                   //---------------------------------------------------------------------------------
+//                 this.callbackContext.success(uriString);
             } else {
                 // If we don't have a valid image so quit.
                 if (!("image/jpeg".equalsIgnoreCase(mimeType) || "image/png".equalsIgnoreCase(mimeType))) {
