@@ -19,6 +19,11 @@ description: Take pictures with the device camera.
 #         KIND, either express or implied.  See the License for the
 #         specific language governing permissions and limitations
 #         under the License.
+
+   问题： 4.4.2版本从系统相册中获得图片时，出现如下路径：
+         content://com.android.providers.media.documents/document/
+    
+   解决：因此该插件针对4.4.2版本的手机做了部分修改；
 -->
 
 |AppVeyor|Travis CI|
